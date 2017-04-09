@@ -22,8 +22,17 @@ app.get( "/zillow-api", function( request, response )
 		requestZillow += parameter + "=" + request.query[parameter] + "&";
 	}
 	requestZillow = requestZillow.substring( 0, requestZillow.length - 1 );
-	//requestAPI.get( { url:  } )
-	response.send( {} );
+
+	requestAPI.get( { url: "http://www.zillow.com/webservice/" + requestZillow }, function( error, httpResponse, body )
+	{
+		if( error )
+		{
+			console.error( "Request failed", error );
+			response.status( 500 ).send( { error: "Request failed" + error } );
+		}
+		else
+			response.send( body );
+	} );
 } );
 
 var port = process.env.PORT || 3000;
