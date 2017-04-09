@@ -31,7 +31,10 @@ app.get( "/zillow-api", function( request, response )
 			response.status( 500 ).send( { error: "Request failed" + error } );
 		}
 		else
+		{
+			response.set( "Content-Type", "text/xml" );
 			response.send( body );
+		}
 	} );
 } );
 
